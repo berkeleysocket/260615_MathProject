@@ -5,15 +5,18 @@ namespace SJH
 {
     public abstract class AbstractEnemy : MonoBehaviour
     {
-        private void OnCollisionEnter2D(Collision2D other)
+        [SerializeField] protected float speedOffset = 1f;
+        
+        protected virtual void OnCollisionEnter2D(Collision2D other)
         {
-            if (other.gameObject.CompareTag("Player"))
+            if (other.gameObject.CompareTag("Player") && other.transform.TryGetComponent(out Rigidbody2D rigid))
             {
-                EnemyDead();
+                if(rigid.linearVelocity.magnitude > speedOffset)
+                    EnemyDead();
             }
         }
 
-        protected virtual void EnemyDead()
+        public virtual void EnemyDead()
         {
             Destroy(gameObject);
         }

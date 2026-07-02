@@ -9,8 +9,9 @@ namespace SJH
         
         protected virtual void OnCollisionEnter2D(Collision2D other)
         {
-            if (other.gameObject.CompareTag("Player") && other.transform.TryGetComponent(out Rigidbody2D rigid))
+            if (other.gameObject.layer == 9 && other.transform.TryGetComponent(out Rigidbody2D rigid))
             {
+                Debug.Log(rigid.linearVelocity.magnitude);
                 if(rigid.linearVelocity.magnitude > speedOffset)
                     EnemyDead();
             }
